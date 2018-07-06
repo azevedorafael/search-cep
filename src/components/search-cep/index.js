@@ -1,34 +1,43 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
+import SearchCep from './search-cep'
+import { get } from 'axios'
 
-const SearchCep = () => (
-    <div>
-        <form>
-            <input type='text' name='cep' />
-            <button type='submit'>Buscar endereço</button>
-        </form>
+class SearchCepContainer extends PureComponent {
+    constructor() {
+        super()
+        this.state = {
+            address: '',
+            city: '',
+            code: '',
+            district: '',
+            state: '',
+            status: 1
+        }
+    }
 
-        <table>
-            <thead>
-                <tr>
-                    <td>CEP</td>
-                    <td>Endereço</td>
-                    <td>Bairro</td>
-                    <td>Cidade</td>
-                    <td>Estado</td>
-                </tr>
-            </thead>
+    //Auto binding due Arrow Function this scope lexical  
+    handleSubmit = async (e) => {
+        e.preventDefault()
+        const cep = e.target.cep.value
+        await get(`http://apps.widenet.com.br/busca-cep/api/cep.json?code=${cep}`)
+            .then((response) => {
+                // handle success
+                this.setState(response.data)
+            })
+            .catch((error) => {
+                // handle error
+                console.log(error)
+            })
+    }
 
-            <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-)
+    render() {
+        return (
+            <SearchCep
+                {...this.state}
+                handleSubmit={this.handleSubmit}
+            />
+        )
+    }
+}
 
-export default SearchCep
+export default SearchCepContainer
