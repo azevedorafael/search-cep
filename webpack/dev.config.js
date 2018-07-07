@@ -17,7 +17,8 @@ module.exports = {
   ],
 
   output: Object.assign({}, common.output, {
-    filename: '[name].js'
+    filename: '[name].js',
+    publicPath: ''
   }),
 
   plugins: [
