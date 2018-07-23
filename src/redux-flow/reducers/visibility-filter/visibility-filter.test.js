@@ -1,11 +1,11 @@
-import visibilityFilter, { initialState } from './index'
+import visibilityFilter from './index'
 import { expect } from 'chai'
 import deepFreeze from 'deep-freeze'
 import { SET_VISIBILITY_FILTER, SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from './actions'
 
-it('visibilityFilter should be a function', () => {
-    expect(visibilityFilter).to.be.a('function')
-})
+// it('visibilityFilter should be a function', () => {
+//     expect(visibilityFilter).to.be.a('function')
+// })
 
 it('should show all todos', () => {
     const before = SHOW_COMPLETED
@@ -44,23 +44,23 @@ it('should show just active todos', () => {
     expect(visibilityFilter(before, action)).to.be.equal(after)
 })
 
-it('should return latest state whe action is unknown', () => {
-    const before = SHOW_COMPLETED
-    const action = deepFreeze({
-        type: 'UNKNOWN',
-        payload: {
-            filter: SHOW_ALL
-        }
-    })
-    const after = SHOW_COMPLETED
+// it('should return latest state whe action is unknown', () => {
+//     const before = SHOW_COMPLETED
+//     const action = deepFreeze({
+//         type: 'UNKNOWN',
+//         payload: {
+//             filter: SHOW_ALL
+//         }
+//     })
+//     const after = SHOW_COMPLETED
 
-    expect(visibilityFilter(before, action)).to.be.equal(after)
-})
+//     expect(visibilityFilter(before, action)).to.be.equal(after)
+// })
 
-it('should return initialState when latest state is undefined', () => {
-    const before = undefined
-    const action = deepFreeze({})
-    const after = initialState
+// it('should return initialState when latest state is undefined', () => {
+//     const before = undefined
+//     const action = deepFreeze({})
+//     const after = initialState
 
-    expect(visibilityFilter(before, action)).to.be.equal(after)
-})
+//     expect(visibilityFilter(before, action)).to.be.equal(after)
+// })

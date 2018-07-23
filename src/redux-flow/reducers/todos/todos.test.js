@@ -1,11 +1,11 @@
 import { expect } from 'chai'
 import deepFreeze from 'deep-freeze'
-import todos, { initialState } from './index'
+import todos from './index'
 import { ADD_TODO, TOGGLE_TODO } from './actions'
 
-it('Todos should be a function', () => {
-    expect(todos).to.be.a('function')
-})
+// it('Todos should be a function', () => {
+//     expect(todos).to.be.a('function')
+// })
 
 it('Should add a todo item', () => {
     const before = deepFreeze([])
@@ -90,29 +90,29 @@ it('should toogle second todo', () => {
     expect(todos(before, action)).to.be.deep.equal(after)
 })
 
-it('should return the last state when action is unknow', () => {
-    const before = deepFreeze([
-        { id: 0, text: 'hey', completed: false }
-    ])
+// it('should return the last state when action is unknow', () => {
+//     const before = deepFreeze([
+//         { id: 0, text: 'hey', completed: false }
+//     ])
 
-    const action = deepFreeze({
-        type: 'UNKNOW'
-    })
+//     const action = deepFreeze({
+//         type: 'UNKNOW'
+//     })
 
-    const after = [
-        { id: 0, text: 'hey', completed: false }
-    ]
+//     const after = [
+//         { id: 0, text: 'hey', completed: false }
+//     ]
 
-    expect(todos(before, action)).to.be.deep.equal(after)
-})
+//     expect(todos(before, action)).to.be.deep.equal(after)
+// })
 
-it('should return initialState when state before is undefined', () => {
-    const before = undefined
+// it('should return initialState when state before is undefined', () => {
+//     const before = undefined
 
-    const action = deepFreeze({
-        type: TOGGLE_TODO,
-        payload: { id: 1 }
-    })
-    const after = initialState
-    expect(todos(before, action)).to.be.deep.equal(after)
-})
+//     const action = deepFreeze({
+//         type: TOGGLE_TODO,
+//         payload: { id: 1 }
+//     })
+//     const after = initialState
+//     expect(todos(before, action)).to.be.deep.equal(after)
+// })
