@@ -1,17 +1,13 @@
 import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
 import SearchCep from './search-cep'
 import { get } from 'axios'
+import { updateAddress } from 'reducers/address/action-creators'
 
 class SearchCepContainer extends PureComponent {
   constructor() {
     super()
     this.state = {
-      address: '',
-      city: '',
-      code: '',
-      district: '',
-      state: '',
-      status: 1,
       isFetching: false
     }
   }
@@ -25,7 +21,7 @@ class SearchCepContainer extends PureComponent {
       .then((response) => {
         // handle success
         this.setState({ isFetching: false })
-        this.setState(response.data)
+        this.props.dispatch(updateAddress(response.data))
       })
       .catch((error) => {
         // handle error
@@ -37,10 +33,15 @@ class SearchCepContainer extends PureComponent {
     return (
       <SearchCep
         {...this.state}
+        {...this.props.address}
         handleSubmit={this.handleSubmit}
       />
     )
   }
 }
 
-export default SearchCepContainer
+const mapStateToProps = (state) => ({
+  address: state.address
+})
+
+export default connect(mapStateToProps)(SearchCepContainer)
