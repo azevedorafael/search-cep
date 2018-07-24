@@ -3,7 +3,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import { devToolsEnhancer } from 'redux-devtools-extension'
 import App from './app'
@@ -25,7 +25,14 @@ const initialState = {
   }
 }
 
-const store = createStore(reducer, initialState, devToolsEnhancer(
+const logger = ({ dispatch, getState }) => (next) => (action) => {
+  console.log('LOGGER:: will dispatch', action)
+  const nextAction = next(action)
+  console.log('LOGGER:: next action', nextAction)
+  return nextAction
+}
+
+const store = createStore(reducer, initialState, applyMiddleware(logger), devToolsEnhancer(
   // Specify custom devTools options
 ))
 
