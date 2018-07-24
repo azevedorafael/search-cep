@@ -9,7 +9,23 @@ import { devToolsEnhancer } from 'redux-devtools-extension'
 import App from './app'
 import reducer from 'reducers'
 
-const store = createStore(reducer, /* preloadedState, */ devToolsEnhancer(
+const initialState = {
+  todos: [{
+    text: 'auto',
+    id: '123',
+    completed: false
+  }],
+  address: {
+    status: 1,
+    code: "03380-070",
+    state: "SP",
+    city: "São Paulo",
+    district: "Chácara Belenzinhoooo",
+    address: "Rua Sexto Empírico",
+  }
+}
+
+const store = createStore(reducer, initialState, devToolsEnhancer(
   // Specify custom devTools options
 ))
 
