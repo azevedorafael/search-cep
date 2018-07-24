@@ -47,4 +47,9 @@ if (module.hot) {
     const NextApp = require('./app').default
     renderApp(NextApp)
   })
+
+  module.hot.accept('reducers', () => {
+    const nextReducer = require('reducers').default
+    store.replaceReducer(nextReducer)
+  })
 }
