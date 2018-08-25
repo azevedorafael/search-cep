@@ -1,4 +1,4 @@
-import { FETCHING, SUCCESS, ERROR} from "./actions";
+import { FETCHING, SUCCESS, ERROR } from "./actions";
 import { get } from 'axios'
 
 export const fetchAddress = (cep) => async (dispatch) => {
@@ -7,15 +7,13 @@ export const fetchAddress = (cep) => async (dispatch) => {
     await get(`http://apps.widenet.com.br/busca-cep/api/cep.json?code=${cep}`)
         .then((response) => {
             // handle success
-            dispatch(updateAddress(response.data))
+            dispatch({
+                type: SUCCESS,
+                payload: response.data
+            })
         })
         .catch((error) => {
             // handle error
             dispatch({ type: ERROR })
         })
-
-    dispatch({
-        type: SUCCESS,
-        payload: response
-    })
 }

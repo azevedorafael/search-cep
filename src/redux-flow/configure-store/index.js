@@ -1,12 +1,10 @@
-import { createStore, applyMiddleware } from 'redux'
-import { devToolsEnhancer } from 'redux-devtools-extension'
+import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import rootReducer from 'reducers'
 
 export default ({ initialState } = {}) => {
-    const store = createStore(rootReducer, initialState, applyMiddleware(logger, thunk), devToolsEnhancer(
-        // Specify custom devTools options
-    ))
+    const enhancer = compose(applyMiddleware(thunk), logger())
+    const store = createStore(rootReducer, initialState, enhancer)
 
     if (module.hot) {
         module.hot.accept('reducers', () => {
@@ -14,15 +12,20 @@ export default ({ initialState } = {}) => {
             store.replaceReducer(nextReducer)
         })
     }
+
     return store
 }
 
-const logger = ({ dispatch, getState }) => (next) => (action) => {
-    console.group(`LOGGER->${action.type}`)
-    console.log('will dispatch', action)
-    console.log('state', getState())
-    const nextAction = next(action)
-    console.log('next state', getState())
-    console.groupEnd(`LOGGER->${action.type}`)
-    return nextAction
-}
+const logger = () => window.__REDUX_DEVTOOLS_EXTENSION__
+    ? window.__REDUX_DEVTOOLS_EXTENSION__()
+    : (x) => x
+
+// const logger = ({ dispatch, getState }) => (next) => (action) => {
+//     console.group(`LOGGER->${action.type}`)
+//     console.log('will dispatch', action)
+//     console.log('state', getState())
+//     const nextAction = next(action)
+//     console.log('next state', getState())
+//     console.groupEnd(`LOGGER->${action.type}`)
+//     return nextAction
+// }

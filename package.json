@@ -45,7 +45,6 @@
     "jest": "^21.1.0",
     "react-hot-loader": "next",
     "react-test-renderer": "^15.6.1",
-    "redux-devtools-extension": "^2.13.5",
     "snazzy": "^7.0.0",
     "standard": "^10.0.3",
     "standard-loader": "^6.0.1",

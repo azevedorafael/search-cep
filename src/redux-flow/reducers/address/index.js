@@ -20,7 +20,7 @@ const address = createReducer(initialState, {
         ...action.payload,
         isFetching: false
     }),
-    [ERROR]: (state, action) => ({
+    [ERROR]: (state) => ({
         ...state,
         isFetching: false
     })
