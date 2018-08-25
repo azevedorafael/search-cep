@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
+import { fetchAddress } from 'reducers/address/action-creators'
 
-const SearchCep = ({
+export const SearchCep = ({
   address,
   city,
   code,
@@ -46,4 +48,17 @@ const SearchCep = ({
     </div>
   )
 
-export default SearchCep
+const mapStateToProps = (state) => state.address
+
+// const mapDispatchToProps = (dispatch) => ({
+//   updateAddress: (data) => dispatch(updateAddress(data))
+// })
+
+const mapDispatchToProps = (dispatch) => ({
+  handleSubmit: (e) => {
+    e.preventDefault()
+    dispatch(fetchAddress(e.target.cep.value))
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchCep)

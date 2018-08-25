@@ -1,7 +1,9 @@
-import { UPDATE_ADDRESS } from "./actions";
+import { FETCHING, SUCCESS, ERROR} from "./actions";
 import { get } from 'axios'
 
-export const fetchAddress = (cep) => async (dispatch, getState) => {
+export const fetchAddress = (cep) => async (dispatch) => {
+    dispatch({ type: FETCHING })
+
     await get(`http://apps.widenet.com.br/busca-cep/api/cep.json?code=${cep}`)
         .then((response) => {
             // handle success
@@ -9,11 +11,11 @@ export const fetchAddress = (cep) => async (dispatch, getState) => {
         })
         .catch((error) => {
             // handle error
-            this.setState({ isFetching: false })
+            dispatch({ type: ERROR })
         })
-}
 
-export const updateAddress = (data) => ({
-    type: UPDATE_ADDRESS,
-    payload: data
-})
+    dispatch({
+        type: SUCCESS,
+        payload: response
+    })
+}
